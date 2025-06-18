@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réception Smith - Tableau de bord moderne</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+    <div class="container">
+        <!-- Compact Header -->
+        <header class="dashboard-header">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icons">
+                       <img src="assets/images/visteonlogo.png" alt="">
+                    </div>
+                     
+                
+                </div>
+                
+                <div class="user-info">
+  <!-- notification bell -->
+  <div class="notification">
+    <i class="fas fa-bell"></i>
+    <span class="notification-badge">3</span>
+  </div>
+
+  <!-- account container holds profile trigger + dropdown -->
+  <div class="account-container" (click)="toggleMenu($event)">
+    <div class="user-profile">
+      <div class="avatar">{{ firstName.charAt(0) }}{{ lastName.charAt(0) }}</div>
+      <div class="user-details">
+        <div class="user-name">{{ firstName }} {{ lastName }}</div>
+        <div class="user-role">{{ role | titlecase }}</div>
+      </div>
+      <i class="fas fa-chevron-down dropdown-icon" [class.rotate]="menuOpen"></i>
+    </div>
+
+    <div class="dropdown-menu" [class.show]="menuOpen">
+      <div class="dropdown-arrow"></div>
+      <div class="dropdown-item" (click)="goToAccount()">
+        <i class="fas fa-user-circle"></i>
+        <span>Mon compte</span>
+      </div>
+      <div class="dropdown-divider"></div>
+      <div class="dropdown-item" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Se déconnecter</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+            </div>
+            
+            <div class="dashboard-title">
+                <p>Gestion des visites fournisseurs</p>
+            </div>
+        </header>
+        
+        <!-- Compact and Colorful Stats Cards -->
+       
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Main Table Section -->
+            <div class="table-section">
+                <h3 class="section-title"><i class="fas fa-users"></i> Visiteurs d'aujourd'hui</h3>
+                
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher par nom, entreprise...">
+                    <button>Rechercher</button>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Visiteur</th>
+                                <th>Société</th>
+                                <th>Heure</th>
+                                <th>Contact interne</th>
+                                <th>Statut</th>
+                                <th>Notification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="visitor-info">
+                                        <div class="visitor-avatar">JD</div>
+                                        <div>
+                                            <div class="visitor-name">John Doe</div>
+                                            <div class="visitor-id">ID: BOS-001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Bosch GmbH</td>
+                                <td>10:00</td>
+                                <td>Sarah Johnson</td>
+                                <td>
+                                    <div class="status-slider">
+                                        <span class="status-option status-active">Arrivé</span>
+                                        <span class="status-option">Attente</span>
+                                        <span class="status-option">Absent</span>
+                                    </div>
+                                </td>
+                                <td><button class="btn-notify"><i class="fas fa-bell"></i> Notifier</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="visitor-info">
+                                        <div class="visitor-avatar">MS</div>
+                                        <div>
+                                            <div class="visitor-name">Marie Smith</div>
+                                            <div class="visitor-id">ID: CON-045</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Continental AG</td>
+                                <td>10:30</td>
+                                <td>Robert Davis</td>
+                                <td>
+                                    <div class="status-slider">
+                                        <span class="status-option">Arrivé</span>
+                                        <span class="status-option status-active">Attente</span>
+                                        <span class="status-option">Absent</span>
+                                    </div>
+                                </td>
+                                <td><button class="btn-notify"><i class="fas fa-bell"></i> Notifier</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="visitor-info">
+                                        <div class="visitor-avatar">TJ</div>
+                                        <div>
+                                            <div class="visitor-name">Thomas Johnson</div>
+                                            <div class="visitor-id">ID: DEL-112</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Delphi Technologies</td>
+                                <td>11:15</td>
+                                <td>Michael Brown</td>
+                                <td>
+                                    <div class="status-slider">
+                                        <span class="status-option status-active">Arrivé</span>
+                                        <span class="status-option">Attente</span>
+                                        <span class="status-option">Absent</span>
+                                    </div>
+                                </td>
+                                <td><button class="btn-notify"><i class="fas fa-bell"></i> Notifier</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="visitor-info">
+                                        <div class="visitor-avatar">AD</div>
+                                        <div>
+                                            <div class="visitor-name">Amélie Dubois</div>
+                                            <div class="visitor-id">ID: VAL-078</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Valeo SA</td>
+                                <td>13:45</td>
+                                <td>Laura Wilson</td>
+                                <td>
+                                    <div class="status-slider">
+                                        <span class="status-option">Arrivé</span>
+                                        <span class="status-option status-active">Attente</span>
+                                        <span class="status-option">Absent</span>
+                                    </div>
+                                </td>
+                                <td><button class="btn-notify"><i class="fas fa-bell"></i> Notifier</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="visitor-info">
+                                        <div class="visitor-avatar">PM</div>
+                                        <div>
+                                            <div class="visitor-name">Pierre Martin</div>
+                                            <div class="visitor-id">ID: MAG-033</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Magna International</td>
+                                <td>14:30</td>
+                                <td>Thomas Anderson</td>
+                                <td>
+                                    <div class="status-slider">
+                                        <span class="status-option">Arrivé</span>
+                                        <span class="status-option">Attente</span>
+                                        <span class="status-option status-active">Absent</span>
+                                    </div>
+                                </td>
+                                <td><button class="btn-notify" disabled><i class="fas fa-bell"></i> Notifier</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="today-date">
+                    Lundi, 14 Juin 2023
+                </div>
+                
+                <div class="visit-summary">
+                    <h3>Résumé des visites</h3>
+                    <div class="summary-item">
+                        <span>Visites totales:</span>
+                        <span class="summary-value">23</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Arrivées:</span>
+                        <span class="summary-value">18</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>En attente:</span>
+                        <span class="summary-value">5</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Annulées:</span>
+                        <span class="summary-value">2</span>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h3><i class="fas fa-bolt"></i> Actions rapides</h3>
+                    <div class="action-buttons">
+                        <div class="action-btn">
+                            <i class="fas fa-calendar-plus"></i>
+                            <span>Nouveau RDV</span>
+                        </div>
+                        <div class="action-btn">
+                            <i class="fas fa-user-clock"></i>
+                            <span>Attente</span>
+                        </div>
+                        <div class="action-btn">
+                            <i class="fas fa-file-export"></i>
+                            <span>Exporter</span>
+                        </div>
+                        <div class="action-btn">
+                            <i class="fas fa-print"></i>
+                            <span>Imprimer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div>© 2023 Réception Smith - Tous droits réservés</div>
+            <div>Dernière mise à jour: Aujourd'hui à 11:30</div>
+        </div>
+    </div>
+
+    <script>
+        // Status slider functionality
+        document.querySelectorAll('.status-slider').forEach(slider => {
+            const options = slider.querySelectorAll('.status-option');
+            
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all options
+                    options.forEach(opt => opt.classList.remove('status-active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('status-active');
+                    
+                    // Find the notification button in the same row
+                    const row = this.closest('tr');
+                    const notifyButton = row.querySelector('.btn-notify');
+                    
+                    // Enable/disable notification button based on status
+                    if (this.textContent === 'Absent') {
+                        notifyButton.disabled = true;
+                    } else {
+                        notifyButton.disabled = false;
+                    }
+                });
+            });
+        });
+        
+        // Notification functionality
+        document.querySelectorAll('.btn-notify').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.disabled) return;
+                
+                const row = this.closest('tr');
+                const visitorName = row.querySelector('.visitor-name').textContent;
+                const contactPerson = row.querySelector('td:nth-child(4)').textContent;
+                
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = 'notification-toast';
+                notification.innerHTML = `
+                    <div style="position: fixed; bottom: 30px; right: 30px; background: var(--primary); padding: 15px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); z-index: 1000; display: flex; align-items: center; animation: slideIn 0.5s ease-out; border-left: 4px solid var(--secondary); max-width: 350px;">
+                        <div style="background: var(--secondary); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                            <i class="fas fa-check" style="color: white; font-size: 1.3rem;"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 3px; color: var(--accent); font-size: 1.1rem;">Notification envoyée</h3>
+                            <p style="color: var(--text-light); font-size: 0.9rem;">${contactPerson} a été notifié de l'arrivée de ${visitorName}</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.5s ease-out forwards';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500);
+                }, 3000);
+                
+                // Add animation to the button
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Envoyée';
+                this.style.background = 'linear-gradient(to right, #4ade80, #22c55e)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.style.background = 'linear-gradient(to right, var(--secondary), var(--accent))';
+                }, 2000);
+            });
+        });
+        
+        // Add CSS for notification animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

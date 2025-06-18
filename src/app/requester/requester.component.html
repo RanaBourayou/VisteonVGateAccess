@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Réunions Visteon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- En-tête -->
+    <header class="visteon-header">
+        <div class="logo">Visteon</div>
+        <nav class="navigation">
+            <a href="#" class="nav-link active">Accueil</a>
+            <a href="#" class="nav-link">Réunions</a>
+            <a href="#" class="nav-link">Compte</a>
+        </nav>
+        <div class="header-right">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+           <div class="account-container">
+                <div class="account-info" (click)="toggleMenu($event)">
+                    <div class="avatar">RB</div>
+                    <div class="account-details">
+                        <div class="account-name">{{ firstName }} {{ lastName }}</div>
+                        <div class="account-role">{{ role | titlecase }}</div>
+                    </div>
+                    <i class="fas fa-chevron-down" [class.rotate]="menuOpen"></i>
+                </div>
+                
+                <div class="dropdown-menu" [class.show]="menuOpen">
+                    <div class="dropdown-arrow"></div>
+                    <div class="dropdown-item" (click)="goToAccount()">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Mon Compte</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" (click)="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Se Déconnecter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu du calendrier -->
+    <div class="calendar-container">
+        <!-- Réunions d'aujourd'hui -->
+        <section class="todays-meetings">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-day"></i> Réunions d'aujourd'hui
+            </h2>
+            <div class="meetings-list">
+                <div class="meeting-card">
+                    <div class="meeting-time">
+                        <i class="fas fa-clock"></i> 9:30 AM - 10:30 AM
+                    </div>
+                    <h3 class="meeting-title">Revue de Stratégie Produit</h3>
+                    <div class="meeting-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i> Tunis
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i> 12 participants
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="meeting-card">
+                    <div class="meeting-time">
+                        <i class="fas fa-clock"></i> 2:00 PM - 3:30 PM
+                    </div>
+                    <h3 class="meeting-title">Présentation Client</h3>
+                    <div class="meeting-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i> Visteon 
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="meeting-card">
+                    <div class="meeting-time">
+                        <i class="fas fa-clock"></i> 4:15 PM - 5:00 PM
+                    </div>
+                    <h3 class="meeting-title">Réunion de Synchronisation d'Équipe</h3>
+                    <div class="meeting-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i> Tunis
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i> 8 membres de l'équipe
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Calendrier -->
+        <section class="calendar-section">
+            <div class="calendar-header">
+                <div class="month-year">{{ getMonthYear() }}</div>
+                <div class="calendar-controls">
+                    <button class="calendar-btn" (click)="navigate('prev')">
+                        <i class="fas fa-chevron-left"></i> Précédent
+                    </button>
+                    <button class="calendar-btn" (click)="navigate('today')">
+                        <i class="fas fa-calendar-day"></i> Aujourd'hui
+                    </button>
+                    <button class="calendar-btn" (click)="navigate('next')">
+                        Suivant <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="weekdays">
+                    <div>Dim</div>
+                    <div>Lun</div>
+                    <div>Mar</div>
+                    <div>Mer</div>
+                    <div>Jeu</div>
+                    <div>Ven</div>
+                    <div>Sam</div>
+                </div>
+                <div class="calendar-days">
+                    <div *ngFor="let day of getDaysInMonth()" 
+                         class="calendar-day"
+                         [class.other-month]="!isCurrentMonth(day)"
+                         [class.today]="isToday(day)"
+                         [class.selected]="isSelected(day)"
+                         (click)="selectDate(day)">
+                        
+                        <div class="day-number">{{ day.getDate() }}</div>
+                        
+                        <div *ngIf="getEventsForDay(day).length > 0" class="event-indicator"></div>
+                        
+                        <div class="event-list" *ngIf="getEventsForDay(day).length > 0">
+                            <div *ngFor="let event of getEventsForDay(day)" class="event-item">
+                                <div class="event-time">{{ event.time }}</div>
+                                <div>{{ event.title }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Fonctionnalités du calendrier avec animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mettre en évidence la date d'aujourd'hui
+            const today = new Date();
+            if (today.getMonth() === 5 && today.getFullYear() === 2025) {
+                const todayElement = document.querySelector('.calendar-day.today');
+                if (todayElement) {
+                    setTimeout(() => {
+                        todayElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }, 800);
+                }
+            }
+            
+            // Boutons de navigation
+            const prevBtn = document.querySelectorAll('.calendar-btn')[0];
+            const todayBtn = document.querySelectorAll('.calendar-btn')[1];
+            const nextBtn = document.querySelectorAll('.calendar-btn')[2];
+            
+            prevBtn.addEventListener('click', function() {
+                this.classList.add('clicked');
+                setTimeout(() => this.classList.remove('clicked'), 300);
+                alert('Navigation au mois précédent');
+            });
+            
+            todayBtn.addEventListener('click', function() {
+                this.classList.add('clicked');
+                setTimeout(() => this.classList.remove('clicked'), 300);
+                document.querySelector('.calendar-day.today').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                this.classList.add('clicked');
+                setTimeout(() => this.classList.remove('clicked'), 300);
+                alert('Navigation au mois suivant');
+            });
+            
+            // Sélection de date
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.other-month)');
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    // Supprimer la classe selected de tous les jours
+                    document.querySelectorAll('.calendar-day').forEach(d => {
+                        d.classList.remove('selected');
+                    });
+                    
+                    // Ajouter la classe selected au jour cliqué
+                    this.classList.add('selected');
+                    
+                    // Effet d'animation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                });
+            });
+            
+            // Effets au survol des cartes de réunion
+            const meetingCards = document.querySelectorAll('.meeting-card');
+            meetingCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

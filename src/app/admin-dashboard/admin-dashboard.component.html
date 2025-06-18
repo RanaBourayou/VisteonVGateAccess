@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VGateAccess - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <app-sidebar-dashboard></app-sidebar-dashboard>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+       <app-header-dashboard></app-header-dashboard>
+
+        <!-- Content Area -->
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Tableau de bord</h1>
+                    <p>Gestion des accès fournisseurs</p>
+                </div>
+                <div>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-download"></i> Exporter PDF
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fasfa-plus"></i> Nouvelle réservation
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-value">42</div>
+                            <div class="stat-title">Réservations aujourd'hui</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-value">38</div>
+                            <div class="stat-title">Arrivées enregistrées</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-value">4</div>
+                            <div class="stat-title">En attente</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-value">2</div>
+                            <div class="stat-title">Annulations</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Date</label>
+                        <input type="date" class="filter-control">
+                    </div>
+                    <div class="filter-group">
+                        <label>Fournisseur</label>
+                        <select class="filter-control">
+                            <option>Tous les fournisseurs</option>
+                            <option>Bosch</option>
+                            <option>Continental</option>
+                            <option>Delphi</option>
+                            <option>Valeo</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Personne concernée</label>
+                        <select class="filter-control">
+                            <option>Toutes les personnes</option>
+                            <option>John Doe</option>
+                            <option>Jane Smith</option>
+                            <option>Robert Johnson</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Statut</label>
+                        <select class="filter-control">
+                            <option>Tous les statuts</option>
+                            <option>En attente</option>
+                            <option>Arrivée enregistrée</option>
+                            <option>Départ enregistré</option>
+                            <option>Annulé</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reservations Table -->
+            <div class="data-section">
+                <div class="section-header">
+                    <div class="section-title">Réservations récentes</div>
+                    <div class="export-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fournisseur</th>
+                                <th>Personne concernée</th>
+                                <th>Date/Heure</th>
+                                <th>Motif</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#VGA-001</td>
+                                <td>Bosch</td>
+                                <td>John Doe</td>
+                                <td>14 Juin 2023, 10:00</td>
+                                <td>Livraison pièces</td>
+                                <td><span class="status-badge status-checkedin">Arrivée enregistrée</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <div class="action-btn"><i class="fas fa-eye"></i></div>
+                                        <div class="action-btn"><i class="fas fa-edit"></i></div>
+                                        <div class="action-btn"><i class="fas fa-trash"></i></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#VGA-002</td>
+                                <td>Continental</td>
+                                <td>Jane Smith</td>
+                                <td>14 Juin 2023, 11:30</td>
+                                <td>Réunion technique</td>
+                                <td><span class="status-badge status-pending">En attente</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <div class="action-btn"><i class="fas fa-eye"></i></div>
+                                        <div class="action-btn"><i class="fas fa-edit"></i></div>
+                                        <div class="action-btn"><i class="fas fa-trash"></i></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#VGA-003</td>
+                                <td>Delphi</td>
+                                <td>Robert Johnson</td>
+                                <td>14 Juin 2023, 14:00</td>
+                                <td>Audit qualité</td>
+                                <td><span class="status-badge status-checkedout">Départ enregistré</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <div class="action-btn"><i class="fas fa-eye"></i></div>
+                                        <div class="action-btn"><i class="fas fa-edit"></i></div>
+                                        <div class="action-btn"><i class="fas fa-trash"></i></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#VGA-004</td>
+                                <td>Valeo</td>
+                                <td>Sarah Williams</td>
+                                <td>14 Juin 2023, 15:30</td>
+                                <td>Formation produit</td>
+                                <td><span class="status-badge status-cancelled">Annulé</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <div class="action-btn"><i class="fas fa-eye"></i></div>
+                                        <div class="action-btn"><i class="fas fa-edit"></i></div>
+                                        <div class="action-btn"><i class="fas fa-trash"></i></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#VGA-005</td>
+                                <td>Bosch</td>
+                                <td>Michael Brown</td>
+                                <td>14 Juin 2023, 16:45</td>
+                                <td>Maintenance équipement</td>
+                                <td><span class="status-badge status-checkedin">Arrivée enregistrée</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <div class="action-btn"><i class="fas fa-eye"></i></div>
+                                        <div class="action-btn"><i class="fas fa-edit"></i></div>
+                                        <div class="action-btn"><i class="fas fa-trash"></i></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Réservations par statut</div>
+                        <select class="filter-control" style="width: auto;">
+                            <option>Cette semaine</option>
+                            <option>Ce mois</option>
+                            <option>Cette année</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Réservations par fournisseur</div>
+                        <select class="filter-control" style="width: auto;">
+                            <option>Ce mois</option>
+                            <option>Ce trimestre</option>
+                            <option>Cette année</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="supplierChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Status Chart
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            const statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Arrivées enregistrées', 'En attente', 'Départs enregistrés', 'Annulées'],
+                    datasets: [{
+                        data: [38, 4, 25, 2],
+                        backgroundColor: [
+                            '#28a745',
+                            '#ffc107',
+                            '#002f6c',
+                            '#dc3545'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Supplier Chart
+            const supplierCtx = document.getElementById('supplierChart').getContext('2d');
+            const supplierChart = new Chart(supplierCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Bosch', 'Continental', 'Delphi', 'Valeo', 'Autres'],
+                    datasets: [{
+                        label: 'Nombre de visites',
+                        data: [15, 12, 8, 10, 5],
+                        backgroundColor: '#002f6c',
+                        borderWidth: 0,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
